@@ -13,3 +13,26 @@ form.addEventListener("submit", e => {
   const result = parse(inputElement.value)
   outputElement.textContent = result
 })
+
+let parse = (equation) => {
+  if (equation.match(PARENTHESIS_REGEX)) {
+    const subEquation = equation.match(PARENTHESIS_REGEX).groups.equation
+    const result = parse(subEquation)
+    const newEquation = equation.replace(PARENTHESIS_REGEX, result)
+    return parse(newEquation)
+  } else if (equation.match(EXPONENT_REGEX)) {
+    const result = handleMath(equation.match(EXPONENT_REGEX).groups)
+    const newEquation = equation.replace(EXPONENT_REGEX, result)
+    return parse(newEquation)
+  } else if (equation.match(MULTIPLY_DIVIDE_REGEX)) {
+    const result = handleMath(equation.match(MULTIPLY_DIVIDE_REGEX).groups)
+    const newEquation = equation.replace(MULTIPLY_DIVIDE_REGEX, result)
+    return parse(newEquation)
+  } else if (equation.match(ADD_SUBTRACT_REGEX)) {
+    const result = handleMath(equation.match(ADD_SUBTRACT_REGEX).groups)
+    const newEquation = equation.replace(ADD_SUBTRACT_REGEX, result)
+    return parse(newEquation)
+  } else {
+    return parseFloat(equation)
+  }
+}
