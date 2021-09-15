@@ -36,3 +36,21 @@ let parse = (equation) => {
     return parseFloat(equation)
   }
 }
+
+let handleEquation = ({ operand1, operand2, operation }) => {
+  const number1 = parseFloat(operand1)
+  const number2 = parseFloat(operand2)
+
+  switch (operation) {
+    case "*":
+      return number1 * number2
+    case "/":
+      return number1 / number2
+    case "+":
+      return number1 + number2
+    case "-":
+      return number1 - number2
+    case "^":
+      return number1 ** number2
+  }
+}
